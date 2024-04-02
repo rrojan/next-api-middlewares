@@ -8,4 +8,13 @@ const pipe = async (...fns: MiddlewareChain) => {
   }
 }
 
-export default pipe
+const pipeWithErrorInterceptor = async (...fns: MiddlewareChain) => {
+  const errorInterceptor = fns[fns.length - 1]
+  try {
+    return pipe(...fns.slice(0, fns.length - 1))
+  } catch (e) {
+    errorInterceptor(e)
+  }
+}
+
+export { pipe, pipeWithErrorInterceptor }
