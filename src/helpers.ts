@@ -3,11 +3,11 @@ import { MiddlewareChain, NextFn, Params } from "./types"
 
 export const startPipe = async (
   req: NextRequest,
-  params: Params,
-  fns: MiddlewareChain,
+  params: any,
+  fns: any[],
   currentFnIndex: number
 ) => {
-  const next: NextFn = async (pipeParams: any) => {
+  const next: any = async (pipeParams: any) => {
     // Recursively run next pipe fn until the end of the chain
     const nextPipeFunction = fns[currentFnIndex + 1]
     if (!nextPipeFunction) return

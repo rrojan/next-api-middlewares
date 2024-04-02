@@ -60,16 +60,7 @@ var pipe = (...fns) => __async(void 0, null, function* () {
     return yield startPipe(req, params, fns, 0);
   });
 });
-var pipeWithErrorInterceptor = (...fns) => __async(void 0, null, function* () {
-  const errorInterceptor = fns[fns.length - 1];
-  try {
-    return pipe(...fns.slice(0, fns.length - 1));
-  } catch (e) {
-    errorInterceptor(e);
-  }
-});
 export {
-  pipe,
-  pipeWithErrorInterceptor
+  pipe
 };
 //# sourceMappingURL=index.mjs.map
