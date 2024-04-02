@@ -57,7 +57,8 @@ var __async = (__this, __arguments, generator) => {
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
-  default: () => src_default
+  pipe: () => pipe,
+  pipeWithErrorInterceptor: () => pipeWithErrorInterceptor
 });
 module.exports = __toCommonJS(src_exports);
 
@@ -83,5 +84,17 @@ var pipe = (...fns) => __async(void 0, null, function* () {
     return yield startPipe(req, params, fns, 0);
   });
 });
-var src_default = pipe;
+var pipeWithErrorInterceptor = (...fns) => __async(void 0, null, function* () {
+  const errorInterceptor = fns[fns.length - 1];
+  try {
+    return pipe(...fns.slice(0, fns.length - 1));
+  } catch (e) {
+    errorInterceptor(e);
+  }
+});
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  pipe,
+  pipeWithErrorInterceptor
+});
 //# sourceMappingURL=index.js.map

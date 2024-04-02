@@ -10,5 +10,6 @@ type MiddlewareOrHandler<AdditionalReqProperties = void> = (req: NextRequest & A
 type MiddlewareChain = MiddlewareOrHandler<any>[];
 
 declare const pipe: (...fns: MiddlewareChain) => Promise<(req: NextRequest, params: Params) => Promise<void | next_server.NextResponse<unknown>>>;
+declare const pipeWithErrorInterceptor: (...fns: MiddlewareChain) => Promise<((req: NextRequest, params: Params) => Promise<void | next_server.NextResponse<unknown>>) | undefined>;
 
-export { pipe as default };
+export { pipe, pipeWithErrorInterceptor };
