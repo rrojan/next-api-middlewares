@@ -55,12 +55,21 @@ var startPipe = (req, params, fns, currentFnIndex) => __async(void 0, null, func
 });
 
 // src/index.ts
-var pipe = (...fns) => __async(void 0, null, function* () {
+var pipe = (...fns) => {
   return (req, params) => __async(void 0, null, function* () {
     return yield startPipe(req, params, fns, 0);
   });
-});
+};
+var pipeWithErrorInterceptor = (...fns) => {
+  const errorInterceptor = fns[fns.length - 1];
+  try {
+    return pipe(...fns.slice(0, fns.length - 1));
+  } catch (e) {
+    errorInterceptor(e);
+  }
+};
 export {
-  pipe
+  pipe,
+  pipeWithErrorInterceptor
 };
 //# sourceMappingURL=index.mjs.map
