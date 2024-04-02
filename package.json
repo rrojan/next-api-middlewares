@@ -1,0 +1,25 @@
+{
+  "name": "next-api-middlewares",
+  "version": "0.1.0",
+  "description": "Add reusable middlewares to your NextJS API routes",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": "https://github.com/rrojan/next-api-middlewares",
+  "author": "Rojan Rajbhandari",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "next": "^14.1.4"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3"
+  },
+  "scripts": {
+    "build": "tsup"
+  }
+}
