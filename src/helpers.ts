@@ -20,7 +20,6 @@ export const startPipe = async (
     )
   }
 
-  // Initializes pipe - the next function will
-  // recursively run next pipeFunction when called by the current fn
+  // The next function will recursively run next function from list of pipe functions
   return await fns[currentFnIndex](req, params, next)
 }
