@@ -57,32 +57,34 @@ var __async = (__this, __arguments, generator) => {
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
-  pipe: () => pipe
+  middlewares: () => middlewares
 });
 module.exports = __toCommonJS(src_exports);
-function pipe(...pipeFunctions) {
-  return (req, params) => __async(this, null, function* () {
-    return yield startPipe(req, params, pipeFunctions, 0);
+
+// src/helpers.ts
+var startPipe = (req, params, fns, currentFnIndex) => __async(void 0, null, function* () {
+  const next = (pipeParams) => __async(void 0, null, function* () {
+    const nextPipeFunction = fns[currentFnIndex + 1];
+    if (!nextPipeFunction)
+      return;
+    return yield startPipe(
+      req,
+      __spreadProps(__spreadValues({}, params), { pipeParams }),
+      fns,
+      currentFnIndex + 1
+    );
   });
-}
-function startPipe(req, params, pipeFunctions, currentPipeFunctionIndex) {
-  return __async(this, null, function* () {
-    const next = (pipeParams) => __async(this, null, function* () {
-      const nextPipeFunction = pipeFunctions[currentPipeFunctionIndex + 1];
-      if (!nextPipeFunction)
-        return;
-      return yield startPipe(
-        req,
-        __spreadProps(__spreadValues({}, params), { pipeParams }),
-        pipeFunctions,
-        currentPipeFunctionIndex + 1
-      );
-    });
-    return yield pipeFunctions[currentPipeFunctionIndex](req, params, next);
+  return yield fns[currentFnIndex](req, params, next);
+});
+
+// src/index.ts
+var middlewares = (...fns) => __async(void 0, null, function* () {
+  return (req, params) => __async(void 0, null, function* () {
+    return yield startPipe(req, params, fns, 0);
   });
-}
+});
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  pipe
+  middlewares
 });
 //# sourceMappingURL=index.js.map

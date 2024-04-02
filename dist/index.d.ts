@@ -1,6 +1,11 @@
-import { NextResponse, NextRequest } from 'next/server';
+import * as next_server from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-type Next = (pipeParams?: any) => Promise<NextResponse | void>;
-declare function pipe(...pipeFunctions: any): (req: NextRequest, params: any) => Promise<any>;
+type NextFn = (pipeParams?: any) => Promise<NextResponse | void>;
+type Params = Record<string, any>;
+type MiddlewareOrHandler<AdditionalReqProperties = void> = (req: NextRequest & AdditionalReqProperties, params?: Params, next?: NextFn) => NextResponse | Promise<NextResponse | void>;
+type MiddlewareChain = MiddlewareOrHandler<any>[];
 
-export { type Next, pipe };
+declare const middlewares: (...fns: MiddlewareChain) => Promise<(req: NextRequest, params: any) => Promise<void | next_server.NextResponse<unknown>>>;
+
+export { middlewares };

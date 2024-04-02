@@ -38,29 +38,29 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 
+// src/helpers.ts
+var startPipe = (req, params, fns, currentFnIndex) => __async(void 0, null, function* () {
+  const next = (pipeParams) => __async(void 0, null, function* () {
+    const nextPipeFunction = fns[currentFnIndex + 1];
+    if (!nextPipeFunction)
+      return;
+    return yield startPipe(
+      req,
+      __spreadProps(__spreadValues({}, params), { pipeParams }),
+      fns,
+      currentFnIndex + 1
+    );
+  });
+  return yield fns[currentFnIndex](req, params, next);
+});
+
 // src/index.ts
-function pipe(...pipeFunctions) {
-  return (req, params) => __async(this, null, function* () {
-    return yield startPipe(req, params, pipeFunctions, 0);
+var middlewares = (...fns) => __async(void 0, null, function* () {
+  return (req, params) => __async(void 0, null, function* () {
+    return yield startPipe(req, params, fns, 0);
   });
-}
-function startPipe(req, params, pipeFunctions, currentPipeFunctionIndex) {
-  return __async(this, null, function* () {
-    const next = (pipeParams) => __async(this, null, function* () {
-      const nextPipeFunction = pipeFunctions[currentPipeFunctionIndex + 1];
-      if (!nextPipeFunction)
-        return;
-      return yield startPipe(
-        req,
-        __spreadProps(__spreadValues({}, params), { pipeParams }),
-        pipeFunctions,
-        currentPipeFunctionIndex + 1
-      );
-    });
-    return yield pipeFunctions[currentPipeFunctionIndex](req, params, next);
-  });
-}
+});
 export {
-  pipe
+  middlewares
 };
 //# sourceMappingURL=index.mjs.map
