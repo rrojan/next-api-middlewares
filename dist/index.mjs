@@ -55,12 +55,13 @@ var startPipe = (req, params, fns, currentFnIndex) => __async(void 0, null, func
 });
 
 // src/index.ts
-var middlewares = (...fns) => __async(void 0, null, function* () {
+var pipe = (...fns) => __async(void 0, null, function* () {
   return (req, params) => __async(void 0, null, function* () {
     return yield startPipe(req, params, fns, 0);
   });
 });
+var src_default = pipe;
 export {
-  middlewares
+  src_default as default
 };
 //# sourceMappingURL=index.mjs.map

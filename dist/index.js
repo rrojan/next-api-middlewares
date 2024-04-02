@@ -57,7 +57,7 @@ var __async = (__this, __arguments, generator) => {
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
-  middlewares: () => middlewares
+  default: () => src_default
 });
 module.exports = __toCommonJS(src_exports);
 
@@ -78,13 +78,10 @@ var startPipe = (req, params, fns, currentFnIndex) => __async(void 0, null, func
 });
 
 // src/index.ts
-var middlewares = (...fns) => __async(void 0, null, function* () {
+var pipe = (...fns) => __async(void 0, null, function* () {
   return (req, params) => __async(void 0, null, function* () {
     return yield startPipe(req, params, fns, 0);
   });
 });
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  middlewares
-});
+var src_default = pipe;
 //# sourceMappingURL=index.js.map
