@@ -1,20 +1,31 @@
 import { NextRequest } from "next/server"
-import { MiddlewareChain, Params } from "./types"
+import {
+  HandlerWrapper,
+  MiddlewareChain,
+  Params,
+  PipeOpts,
+  RequestHandler,
+} from "./types"
 import { startPipe } from "./helpers"
 
-const pipe = (...fns: MiddlewareChain) => {
-  return async (req: NextRequest, params: Params) => {
-    return await startPipe(req, params, fns, 0)
+class MiddlewarePipe {
+  errorHandler?: HandlerWrapper
+
+  constructor(opts?: PipeOpts) {
+    this.errorHandler = opts?.errorHandler
+  }
+
+  pipe(...fns: MiddlewareChain) {
+    const pipeFn: RequestHandler = async (req: NextRequest, params: Params) => {
+      return await startPipe(req, params, fns, 0)
+    }
+
+    if (this.errorHandler) {
+      return this.errorHandler(pipeFn)
+    }
+
+    return pipeFn
   }
 }
 
-const pipeWithErrorInterceptor = (...fns: MiddlewareChain) => {
-  const errorInterceptor = fns[fns.length - 1]
-  try {
-    return pipe(...fns.slice(0, fns.length - 1))
-  } catch (e) {
-    errorInterceptor(e)
-  }
-}
-
-export { pipe, pipeWithErrorInterceptor }
+export default MiddlewarePipe

@@ -7,14 +7,14 @@ export const startPipe = async (
   fns: MiddlewareChain,
   currentFnIndex: number
 ) => {
-  const next: NextFn = async (pipeParams: any) => {
+  const next: NextFn = async (context: any) => {
     // Recursively run next pipe fn until the end of the chain
     const nextPipeFunction = fns[currentFnIndex + 1]
     if (!nextPipeFunction) return
 
     return await startPipe(
       req,
-      { ...params, pipeParams },
+      { ...params, ...context },
       fns,
       currentFnIndex + 1
     )
