@@ -5,8 +5,11 @@ import {
   Params,
   PipeOpts,
   RequestHandler,
+  NextFn,
 } from "./types"
 import { startPipe } from "./helpers"
+
+export { Params, NextFn }
 
 class MiddlewarePipe {
   errorHandler?: HandlerWrapper
