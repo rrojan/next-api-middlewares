@@ -1,6 +1,6 @@
 {
   "name": "next-api-middlewares",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Add reusable middlewares to your NextJS API routes",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
