@@ -6,7 +6,7 @@
 
 It is designed to work well with the new NextJS app router, and is heavily inspired by the middleware architecture of ExpressJS.
 
-Since we are piping together functions, *all middlewares run as route handlers - no edge functions involved!* This makes it different from NextJS' native `middleware.ts` implementation
+Since we are piping together functions, *all middlewares run as route handlers - no edge functions involved!* This makes it different from NextJS' native `middleware.ts` implementation.
 
 ### Features:
 
@@ -108,7 +108,6 @@ const middleware = new MiddlewarePipe()
 
 export const GET = middleware.pipe(authenticate, getHandler)
 export const POST = middleware.pipe(authenticate, postHandler)
-// ...
 ```
 
 ---
@@ -146,7 +145,8 @@ const errorHandler = (handler: RequestHandler) => {
   } catch (error) {
     console.error(error)
 
-    // Additional response building logic here (E.g. using `error instanceOf CustomError` to also pass an error status code)
+    // Additional response building logic here (E.g. using `error instanceOf CustomError`
+    // to also pass an error status code)
     const error = error.message
     const status = 401
 
@@ -156,7 +156,6 @@ const errorHandler = (handler: RequestHandler) => {
 
 const middleware = new MiddlewarePipe({ errorHandler })
 
-export const GET = middleware.pipe(logger, getHandler)
-export const POST = middleware.pipe(logger, postHandler)
-// ...
+export const GET = middleware.pipe(authenticate, getHandler)
+export const POST = middleware.pipe(authenticate, postHandler)
 ```
