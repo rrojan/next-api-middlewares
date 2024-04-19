@@ -4,7 +4,9 @@
 
 `next-api-middlewares` is a package that helps you structure your NextJS API route handlers with resuable middlewares.
 
-It is designed to work well with the new NextJS app router, and is heavily inspired by the middleware architecture of ExpressJS
+It is designed to work well with the new NextJS app router, and is heavily inspired by the middleware architecture of ExpressJS.
+
+Since we are piping together functions, *all middlewares run as route handlers - no edge functions involved!* This makes it different from NextJS' native `middleware.ts` implementation
 
 ### Features:
 
