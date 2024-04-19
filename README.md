@@ -13,6 +13,8 @@ It is designed to work well with the new NextJS app router, and is heavily inspi
 - Pass data from one middleware to the next through a `context` object
 - Pass a shared `errorHandler` wrapper to return meaningful error messages in your responses. You can simply `throw` and exception anywhere in your code and let the errorHandler form clean error responses for you.
 
+---
+
 ## Usage
 
 ### Basic Usage
